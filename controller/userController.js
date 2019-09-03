@@ -568,15 +568,15 @@ let resetcode=(req,res)=>{
                 let transporter=nodemailer.createTransport({
                     service:'gmail',
                     auth:{
-                        user:'aruashok17@gmail.com',
-                        pass:'viratashok01'
+                        user:'ashokbejo01@gmail.com',
+                        pass:'ashokbejo01@10@97'
                     }
                 });
                 let mailOptions={
                     from:'"Ashok TODO APP"',
                     to:result.email,
                     subject:'"Welcome to Ak-TODO app"',
-                    html:`<p>YOUR RESET PASSWORD CODE IS ${result.resetId}</p>`
+                    html:`<p>YOUR RESET PASSWORD CODE IS</p> <h1>${result.resetId}</h1>`
                 }
                 transporter.sendMail(mailOptions,function(err,data){
                     if(err){
