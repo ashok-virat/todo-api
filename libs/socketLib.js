@@ -111,36 +111,18 @@ let setServer=(server)=>{
           
 
         //friendtododelete code is start
-           socket.on('friendtododelete',(senderId,receiverId,statusId)=>{
+           socket.on('friendtododelete',(senderId,receiverId)=>{
                  friendsModel.findOne({senderId:senderId,receiverId:receiverId},(err,result)=>{
                      if(err){
                          console.log(err)
                      }
                      else {
-                        
                          myio.emit(`${result.receiverId} gettododeletemsg`,result);
                      }
                  })
            })
         //friendtododelete code is end
  
-       
-
-        //friendtodoedit code is start
-        socket.on('friendtodoedit',(senderId,receiverId)=>{
-            console.log(receiverId)
-            friendsModel.findOne({senderId:senderId,receiverId:receiverId},(err,result)=>{
-                if(err){
-                    console.log(err)
-                }
-                else {
-                    console.log(result);
-                    myio.emit(`${result.receiverId} gettodoedite`,result);
-                }
-            })
-      })
-        //friendtodoedit code is start
-
 
         //socet disconnect code start
         socket.on('disconnect',()=>{

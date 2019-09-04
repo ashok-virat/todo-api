@@ -270,6 +270,8 @@ let getevent=(req,res)=>{
        }
    })
 }
+
+
 let deleteevent=(req,res)=>{
     todoModel.deleteOne({statusId:req.body.statusId},(err,result)=>{
         if(err){
@@ -287,8 +289,8 @@ let updateevent=(req,res)=>{
     let options=req.body;
     todoModel.update({statusId:req.body.statusId},options,{multi:true}).exec((err,result)=>{
         if(err){
-            logger.captureError('some error occured','update event',5)
-        let apiResponse=response.response(true,'some error occured',500,null)
+            logger.captureError('some error occured','update event',6)
+        let apiResponse=response.response(true,'some error occured',403,null)
         res.send(apiResponse)
         }
         else {
@@ -297,11 +299,13 @@ let updateevent=(req,res)=>{
         }
     })
 }
+
+
 let geteventbystatusId=(req,res)=>{
     todoModel.findOne({statusId:req.params.statusId},(err,result)=>{
             if(err){
-                logger.captureError('some error occured','get event',5)
-            let apiResponse=response.response(true,'some error occured',500,null)
+                logger.captureError('some error occured','get event',7)
+            let apiResponse=response.response(true,'some error occured',400,null)
             res.send(apiResponse)
             }
             else {
@@ -310,6 +314,8 @@ let geteventbystatusId=(req,res)=>{
             }
     })
 }
+
+
 let getusers=(req,res)=>{
      userModel.find()
      .lean()
@@ -329,7 +335,7 @@ let getusers=(req,res)=>{
 let getrequest=(req,res)=>{
     friendreqModel.find({receiverId:req.params.userId},(err,result)=>{
         if(err){
-            logger.captureError('some error occured','getrequest',5)
+            logger.captureError('some error occured','getrequest',9)
         let apiResponse=response.response(true,'some error occured',500,null)
         res.send(apiResponse)
         }
@@ -343,8 +349,8 @@ let getrequest=(req,res)=>{
 let acceptrequest=(req,res)=>{
     friendreqModel.findOne({friendreqId:req.body.friendreqId},(err,result)=>{
         if(err){
-            logger.captureError('some error occured','acceptrequest',5)
-            let apiResponse=response.response(true,'some error occured',500,null)
+            logger.captureError('some error occured','acceptrequest',4)
+            let apiResponse=response.response(true,'some error occured',400,null)
             res.send(apiResponse)
         }
         else if(result){
@@ -361,8 +367,8 @@ let acceptrequest=(req,res)=>{
             deletereq(result.friendreqId);
             createUser.save((err,result)=>{
                 if(err){
-                    logger.captureError('some error occured','acceptrequest',5)
-            let apiResponse=response.response(true,'some error occured',500,null)
+                    logger.captureError('some error occured','acceptrequest',8)
+            let apiResponse=response.response(true,'some error occured',403,null)
             res.send(apiResponse)
                 }
                 else{
@@ -385,7 +391,7 @@ let deletereq=(friendreqId)=>{
 let deletefrndreq=(req,res)=>{
     friendreqModel.deleteOne({friendreqId:req.body.friendreqId},(err,result)=>{
         if(err){
-            logger.captureError('some error occured','deletefrndrequest',5)
+            logger.captureError('some error occured','deletefrndrequest',6)
     let apiResponse=response.response(true,'some error occured',500,null)
     res.send(apiResponse)
         }
@@ -429,7 +435,7 @@ let sendrequest=(req,res)=>{
         return new Promise((resolve,reject)=>{
             friendreqModel.findOne({receiverId:req.body.receiverId,senderId:req.body.senderId},(err,result)=>{
                 if(err){
-                    logger.captureError('some error occured',' findfriendreq',5)
+                    logger.captureError('some error occured','findfriendreq',5)
             let apiResponse=response.response(true,'some error occured',500,null)
             reject(apiResponse)
                 }
@@ -437,8 +443,8 @@ let sendrequest=(req,res)=>{
                     resolve(req);
                 }
                 else {
-                    logger.captureError('some error occured','',5)
-                    let apiResponse=response.response(true,'Request is send already',500,null)
+                    logger.captureError('some error occured','findfriendreq',8)
+                    let apiResponse=response.response(true,'Request is send already',403,null)
                     reject(apiResponse)
                 }
             })
@@ -448,8 +454,8 @@ let sendrequest=(req,res)=>{
         return new Promise((resolve,reject)=>{
          friendsModel.findOne({receiverId:req.body.receiverId,senderId:req.body.senderId},(err,result)=>{
             if(err){
-                logger.captureError('some error occured','friendsId',5)
-        let apiResponse=response.response(true,'some error occured',500,null)
+                logger.captureError('some error occured','friendsId',8)
+        let apiResponse=response.response(true,'some error occured',400,null)
         reject(apiResponse)
             }
             else if(check.isEmpty(result)){
@@ -468,7 +474,7 @@ let sendrequest=(req,res)=>{
         return new Promise((resolve,reject)=>{
             userModel.findOne({userId:req.body.receiverId},(err,result)=>{
                 if(err){
-                    logger.captureError('some error occured','sendrequest',5)
+                    logger.captureError('some error occured','sendrequest',6)
                     let apiResponse=response.response(true,'some error occured',500,null)
                     reject(apiResponse)
                 }
@@ -486,7 +492,7 @@ let sendrequest=(req,res)=>{
                     createrequest.save((err,result)=>{
                         if(err){
                           logger.captureError('some error occured','send request',7)
-                          let apiResponse=response.response(true,'some error occured',500,null)
+                          let apiResponse=response.response(true,'some error occured',400,null)
                           reject(apiResponse)
                         }
                         else {
@@ -519,12 +525,12 @@ let resetcode=(req,res)=>{
                 
                 userModel.findOne({email:req.body.email},(err,result)=>{
                     if(err){
-                        logger.captureError('some error occured','findemaildetails',5)
-                        let apiResponse=response.response(true,'some error occured',500,null)
+                        logger.captureError('some error occured','findemaildetails',9)
+                        let apiResponse=response.response(true,'some error occured',400,null)
                         reject(apiResponse)
                     }
                     else if(check.isEmpty(result)){
-                        let apiResponse=response.response(true,'User is not found',500,null)
+                        let apiResponse=response.response(true,'User is not found',403,null)
                         res.send(apiResponse)
                     }
                     else  {
@@ -544,7 +550,7 @@ let resetcode=(req,res)=>{
                         })
             }
           else {
-            logger.captureError('some error occured','findemaildetails',5)
+            logger.captureError('some error occured','findemaildetails',7)
             let apiResponse=response.response(true,'Email parameter is missing',500,null)
             reject(apiResponse)
           }
@@ -555,8 +561,8 @@ let resetcode=(req,res)=>{
       return new Promise((resolve,reject)=>{
           userModel.findOne({email:req.body.email},(err,result)=>{
               if(err){
-                logger.captureError('some error occured','sendmail',5)
-                let apiResponse=response.response(true,'some error occured',500,null)
+                logger.captureError('some error occured','sendmail',8)
+                let apiResponse=response.response(true,'some error occured',400,null)
                 reject(apiResponse)
               }
               else if(check.isEmpty(result)){
@@ -581,7 +587,7 @@ let resetcode=(req,res)=>{
                 transporter.sendMail(mailOptions,function(err,data){
                     if(err){
                         console.log(err)
-                        logger.captureError('some error occured','sendmail',5)
+                        logger.captureError('some error occured','sendmail',9)
                         let apiResponse=response.response(true,'some error occured',500,null)
                         reject(apiResponse)
                     }
@@ -637,20 +643,23 @@ let resetpassword=(req,res)=>{
         })
     }
        else {
-        let apiResponse=response.response(true,'Reset code is Missing',500,null)
+        let apiResponse=response.response(true,'Reset code is Missing',403,null)
         res.send(apiResponse)
        }
 }
+
+
+
 let savedeletehistory=(req,res)=>{
     todoModel.findOne({statusId:req.body.statusId},(err,data)=>{
         if(err){
-            logger.captureError('some error occured','save delete history',5)
-            let apiResponse=response.response(true,'some error occured',500,null)
+            logger.captureError('some error occured','save delete history',7)
+            let apiResponse=response.response(true,'some error occured',400,null)
             res.send(apiResponse)
         }
         else if(check.isEmpty(data)){
             logger.captureError('some error occured','save delete history',5)
-            let apiResponse=response.response(true,'some error occured',500,null)
+            let apiResponse=response.response(true,'some error occured',400,null)
             res.send(apiResponse)
         }
         else {
@@ -665,7 +674,7 @@ let savedeletehistory=(req,res)=>{
             })
             createtodo.save((err,result)=>{
                 if(err){
-                    logger.captureError('some error occured','save delete history',5)
+                    logger.captureError('some error occured','save delete history',8)
                     let apiResponse=response.response(true,'some error occured',500,null)
                     res.send(apiResponse)
                 }
@@ -679,16 +688,18 @@ let savedeletehistory=(req,res)=>{
     })
  }
 
+
+ 
 let undofunction=(req,res)=>{
     if(req.body.statusId){
         historyModel.findOne({statusId:req.body.statusId},(err,result)=>{
             if(err){
-                logger.captureError('some error occured','undofunction',5)
+                logger.captureError('some error occured','undofunction',8)
                 let apiResponse=response.response(true,'some error occured',500,null)
                 res.send(apiResponse)
             }
             else if(check.isEmpty(result)){
-                logger.captureError('some error occured','undofunction',6)
+                logger.captureError('some error occured','undofunction',7)
                 let apiResponse=response.response(true,'some error occured',403,null)
                 res.send(apiResponse)
             }
@@ -704,8 +715,8 @@ let undofunction=(req,res)=>{
                 })
                 createuser.save((err,result)=>{
                     if(err){
-                        logger.captureError('some error occured','undofunction',5)
-                        let apiResponse=response.response(true,'some error occured',500,null)
+                        logger.captureError('some error occured','undofunction',6)
+                        let apiResponse=response.response(true,'some error occured',400,null)
                         res.send(apiResponse)
                     }
                     else {
