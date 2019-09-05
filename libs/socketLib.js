@@ -143,8 +143,6 @@ let setServer=(server)=>{
         }
            })
         //socket disconnect code end
-
-        
         })
       
 
