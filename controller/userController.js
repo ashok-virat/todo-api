@@ -56,7 +56,7 @@ let signup=(req,res)=>{
             if(req.body.password){
                
             if(!validation.Password(req.body.password)){
-                 logger.captureError('password does not meet requirement','email validation',8);
+                 logger.captureError('password not meet requirement','email validation',8);
                  let apiResponse=response.response(true,'password does not meet requirement',404,null);
                  reject(apiResponse);
             }
